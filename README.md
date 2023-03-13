@@ -27,3 +27,7 @@ Use the [Area Search (Text) API call](https://documenter.getpostman.com/view/129
 to find the Area ID for your home.
 
 Enter both the Area ID and the Token into the configuration fields and click Save.
+
+## Usage
+
+Send a GET request to http://localhost:20515/forecast/get to return the current forecast for your home.
