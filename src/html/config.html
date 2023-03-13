@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Configure Load Shedding Service</title>
+
+    <link rel="stylesheet" href="assets/css/uikit.min.css" />
+    <script src="assets/js/uikit.min.js"></script>
+    <script src="assets/js/uikit-icons.min.js"></script>
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+</head>
+<body class="uk-height-1-1">
+    <form id="configform" class="uk-form-horizontal uk-margin-top uk-margin-left" action="/config/set" method="POST">
+        <fieldset class="uk-fieldset uk-margin-top">
+            <legend class="uk-legend">Provider</legend>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="provider">
+                    Weather Provider
+                </label>
+                <div class="uk-form-controls">
+                    <Select class="uk-select uk-form-width-large" id="provider" name="provider">
+                        <option {{if eq .Provider 0}}selected="selected"{{end}} value="0">Eskom Se Push</option>
+                    </Select>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="areaid">
+                        Area ID
+                    </label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input uk-form-width-large" id="areaid" name="areaid" type="text" placeholder="Area ID" value="{{.AreaID}}">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="token">
+                        Token
+                    </label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input uk-form-width-large" id="token" name="token" type="text" placeholder="Token" value="{{.Token}}">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="timeout">
+                        Forecast Timeout (mins)
+                    </label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input uk-form-width-large" id="timeout" name="timeout" type="text" placeholder="Timeout" value="{{.Timeout}}">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="uk-fieldset uk-margin-top">
+            <input class="uk-button uk-button-primary" type="submit" value="Save Changes">
+        </fieldset>
+    </form>
+    
+    <script type="text/javascript">
+        var frm = $('#configform')
+        frm.submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function (data) {
+                    UIkit.notification({message: 'Update was successful.', status: 'success'});
+                },
+                error: function (data) {
+                    console.log(data)
+                    UIkit.notification({message: data.responseText, status: 'danger'})
+                }
+            });
+        });
+    </script>
+</body>
+</html>

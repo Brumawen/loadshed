@@ -4,6 +4,10 @@
 *.dll
 *.so
 *.dylib
+config.json
+test.json
+*_test.json
+last_*.json
 
 # Test binary, built with `go test -c`
 *.test
